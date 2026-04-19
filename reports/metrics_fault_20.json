@@ -1,0 +1,31 @@
+{
+    "fault_id": 20,
+    "accuracy": 0.7844375,
+    "classification_report": {
+        "0": {
+            "precision": 0.7584620626987733,
+            "recall": 0.8346875,
+            "f1-score": 0.7947512497024518,
+            "support": 480000.0
+        },
+        "1": {
+            "precision": 0.8162173429683157,
+            "recall": 0.7341875,
+            "f1-score": 0.7730323769413003,
+            "support": 480000.0
+        },
+        "accuracy": 0.7844375,
+        "macro avg": {
+            "precision": 0.7873397028335445,
+            "recall": 0.7844375,
+            "f1-score": 0.7838918133218761,
+            "support": 960000.0
+        },
+        "weighted avg": {
+            "precision": 0.7873397028335445,
+            "recall": 0.7844375,
+            "f1-score": 0.7838918133218761,
+            "support": 960000.0
+        }
+    }
+}
