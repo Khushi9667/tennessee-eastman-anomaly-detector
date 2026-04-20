@@ -6,3 +6,5 @@ pyreadr
 scikit-learn
 xgboost
 joblib
+streamlit
+pillow

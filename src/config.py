@@ -1,15 +1,11 @@
 import os
 
-# ==========================================
 # PIPELINE CONTROL
-# ==========================================
 # Change this variable to run the analysis for a different fault.
 FAULTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-TARGET_FAULT = 7
+TARGET_FAULT = 2
 
-# ==========================================
 # DIRECTORY CONFIGURATION
-# ==========================================
 # Base directory of this script (the src/ folder)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,16 +22,13 @@ REPORTS_DIR = os.path.join(ROOT_DIR, "reports")
 for directory in [PROCESSED_DATA_DIR, MODELS_DIR, REPORTS_DIR]:
     os.makedirs(directory, exist_ok=True)
 
-# ==========================================
 # FILE PATH CONFIGURATION
-# ==========================================
 # Input Files (Raw Data)
 TRAIN_NORMAL_PATH = os.path.join(RAW_DATA_DIR, 'TEP_FaultFree_Training.RData')
 TEST_NORMAL_PATH = os.path.join(RAW_DATA_DIR, 'TEP_FaultFree_Testing.RData')
 TRAIN_FAULTY_PATH = os.path.join(RAW_DATA_DIR, 'TEP_Faulty_Training.RData')
 TEST_FAULTY_PATH = os.path.join(RAW_DATA_DIR, 'TEP_Faulty_Testing.RData')
 
-# Output Files (Artifacts & Reports - Dynamically named by Fault ID)
 # Output Files (Processed Data - Dynamically named by Fault ID)
 PROCESSED_TRAIN_PATH = os.path.join(PROCESSED_DATA_DIR, f'processed_training_data_fault_{TARGET_FAULT}.csv')
 PROCESSED_TEST_PATH = os.path.join(PROCESSED_DATA_DIR, f'processed_testing_data_fault_{TARGET_FAULT}.csv')
@@ -45,10 +38,9 @@ SCALER_SAVE_PATH = os.path.join(MODELS_DIR, f'scaler_fault_{TARGET_FAULT}.pkl')
 
 METRICS_SAVE_PATH = os.path.join(REPORTS_DIR, f'metrics_fault_{TARGET_FAULT}.json')
 CM_PLOT_SAVE_PATH = os.path.join(REPORTS_DIR, f'confusion_matrix_fault_{TARGET_FAULT}.png')
+TIMELINE_PLOT_SAVE_PATH = os.path.join(REPORTS_DIR, f'timeline_fault_{TARGET_FAULT}.png')
 
-# ==========================================
 # PREPROCESSING CONFIGURATION
-# ==========================================
 # Outlier capping thresholds
 LOWER_QUANTILE = 0.025
 UPPER_QUANTILE = 0.975
@@ -69,9 +61,7 @@ FEATURES = [
     'xmeas_41', 'xmv_1', 'xmv_2', 'xmv_3', 'xmv_4', 'xmv_5', 'xmv_6', 'xmv_7', 'xmv_8', 'xmv_9', 'xmv_10'
 ]
 
-# ==========================================
 # MODEL CONFIGURATION (Random Forest)
-# ==========================================
 RF_PARAMS = {
     'random_state': 42,
     'class_weight': 'balanced',

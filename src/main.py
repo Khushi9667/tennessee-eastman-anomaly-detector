@@ -5,9 +5,7 @@ from model import train_model, save_trained_model
 from evaluate import evaluate_model
 
 def run_pipeline():
-    print("==================================================")
     print(f"  STARTING DYNAMIC TEP PIPELINE FOR FAULT {TARGET_FAULT}")
-    print("==================================================")
     
     # Load Data
     train_norm, test_norm, train_fault, test_fault = load_and_filter_data(TARGET_FAULT)
@@ -30,9 +28,7 @@ def run_pipeline():
     # Evaluate
     evaluate_model(model, X_test, y_test)
     
-    print("==================================================")
     print(f"  PIPELINE COMPLETE FOR FAULT {TARGET_FAULT}")
-    print("==================================================")
 
 if __name__ == "__main__":
     run_pipeline()
