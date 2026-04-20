@@ -8,7 +8,9 @@ from config import (
 )
 
 def load_rdata(file_path):
-    #Helper function to load an .RData file and extract the main DataFrame.
+    """
+    Helper function to load an .RData file and extract the main DataFrame.
+    """
     print(f"Loading {file_path}...")
     try:
         result = pyreadr.read_r(file_path)
@@ -19,13 +21,18 @@ def load_rdata(file_path):
         raise FileNotFoundError(f"Failed to load {file_path}. Error: {e}")
 
 def downcast_dtypes(df):
-    #Downcasts float64 columns to float32 to save memory.
+    """
+    Downcasts float64 columns to float32 to save memory.
+    """
     float_cols = df.select_dtypes(include=['float64']).columns
     df[float_cols] = df[float_cols].astype('float32')
     return df
 
 def load_and_filter_data(fault_id):
-    #Loads normal datasets and faulty datasets, filtering the faulty data dynamically based on the requested fault_id.
+    """
+    Loads normal datasets and faulty datasets, filtering the 
+    faulty data dynamically based on the requested fault_id.
+    """
     print(f"--- Fetching Data for Fault {fault_id} ---")
 
     # Load data using paths directly from config.py

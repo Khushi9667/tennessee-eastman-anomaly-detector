@@ -8,8 +8,10 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from config import METRICS_SAVE_PATH, CM_PLOT_SAVE_PATH, TIMELINE_PLOT_SAVE_PATH, TARGET_FAULT
 
 def evaluate_model(model, X_test, y_test):
-    #Evaluates the trained model on the test set, prints metrics and saves the classification report (JSON) and confusion matrix plot (PNG).
-    
+    """
+    Evaluates the trained model on the test set, prints metrics, 
+    and saves the classification report (JSON) and confusion matrix plot (PNG).
+    """
     print(f"--- Evaluating Model for Fault {TARGET_FAULT} ---")
     
     # Generate Predictions
@@ -56,7 +58,10 @@ def evaluate_model(model, X_test, y_test):
     print(f"Confusion matrix plot successfully saved to {CM_PLOT_SAVE_PATH}")
 
     print(f"--- Generating Timeline Visuals for Fault {TARGET_FAULT} ---")
-    #Evaluates the model and generates a continuous timeline plot showing normal operation transitioning into a fault state.
+    """
+    Evaluates the model and generates a continuous timeline plot showing 
+    normal operation transitioning into a fault state.
+    """
     
     # Extract exactly one Simulation Run (960 samples) from the test data
     # In TEP, the fault is always introduced at sample 160 of the faulty test run.

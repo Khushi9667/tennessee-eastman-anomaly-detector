@@ -9,8 +9,9 @@ from sklearn.ensemble import RandomForestClassifier
 from config import LOWER_QUANTILE, UPPER_QUANTILE, COLUMNS_TO_DROP, PROCESSED_TRAIN_PATH, PROCESSED_TEST_PATH, SCALER_SAVE_PATH
 
 def cap_outliers_percentile(df, column_list):
-    #Caps extreme values using quantiles defined in config.py.
-    
+    """
+    Caps extreme values using quantiles defined in config.py.
+    """
     capped_df = df.copy()
     
     for col in column_list:
@@ -22,8 +23,10 @@ def cap_outliers_percentile(df, column_list):
     return capped_df
 
 def scale_features(train_normal, train_fault, test_normal, test_fault):
-    #Fits the StandardScaler strictly on the normal training data, then transforms all datasets to simulate real-world baselines.
-    
+    """
+    Fits the StandardScaler strictly on the normal training data, 
+    then transforms all datasets to simulate real-world baselines.
+    """
     features = [col for col in train_normal.columns if col.startswith(('xmeas', 'xmv'))]
     scaler = StandardScaler()
 
@@ -54,8 +57,9 @@ def scale_features(train_normal, train_fault, test_normal, test_fault):
     return final_train_df, final_test_df, scaler
 
 def prepare_initial_data(final_train_df, final_test_df, fault_id):
-    #Separates X and y to prepare for the feature selection process.
-    
+    """
+    Separates X and y to prepare for the feature selection process.
+    """
     features = [col for col in final_train_df.columns if col.startswith(('xmeas', 'xmv'))]
     features = [f for f in features if f not in COLUMNS_TO_DROP]
 
@@ -68,8 +72,9 @@ def prepare_initial_data(final_train_df, final_test_df, fault_id):
     return X_train_full, X_test_full, y_train, y_test
 
 def get_top_k_features(X_train, y_train, k=10):
-    #Trains a baseline model to extract the top K most important features.
-    
+    """
+    Trains a baseline model to extract the top K most important features.
+    """
     # A lightweight RF just to gauge feature importance quickly
     rf_baseline = RandomForestClassifier(n_estimators=50, random_state=42, n_jobs=-1)
     rf_baseline.fit(X_train, y_train)
@@ -83,8 +88,10 @@ def get_top_k_features(X_train, y_train, k=10):
     return top_k_features
 
 def remove_redundant_features(X_train_subset, threshold=0.90):
-    #Calculates a correlation matrix on the selected features. Drops features that have a correlation higher than the threshold.
-    
+    """
+    Calculates a correlation matrix on the selected features. 
+    Drops features that have a correlation higher than the threshold.
+    """
     # Calculate absolute correlation matrix
     corr_matrix = X_train_subset.corr().abs()
     
@@ -100,8 +107,9 @@ def remove_redundant_features(X_train_subset, threshold=0.90):
     return final_features, to_drop
 
 def run_preprocessing(train_normal, test_normal, train_fault, test_fault, fault_id):
-    #Main execution function orchestrating capping, scaling, and dynamic feature selection.
-    
+    """
+    Main execution function orchestrating capping, scaling, and dynamic feature selection.
+    """
     print(f"--- Starting Preprocessing for Fault {fault_id} ---")
     
     cols_to_cap = [col for col in train_normal.columns if col not in ['faultNumber', 'simulationRun']]
@@ -146,8 +154,9 @@ def run_preprocessing(train_normal, test_normal, train_fault, test_fault, fault_
     return X_train_final, X_test_final, y_train, y_test, scaler
 
 def save_preprocessed_data(X_train, y_train, X_test, y_test):
-    #Combines features and target, then saves them to CSV files.
-    
+    """
+    Combines features and target, then saves them to CSV files.
+    """
     print("--- Saving Preprocessed Data ---")
     
     train_df = X_train.copy()
@@ -162,8 +171,9 @@ def save_preprocessed_data(X_train, y_train, X_test, y_test):
 
 # Add this at the bottom of preprocess.py
 def save_scaler(scaler):
-    #Saves the fitted StandardScaler to the directory specified in config.py.
-    
+    """
+    Saves the fitted StandardScaler to the directory specified in config.py.
+    """
     print(f"--- Saving Scaler ---")
     joblib.dump(scaler, SCALER_SAVE_PATH)
     print(f"Scaler successfully saved to {SCALER_SAVE_PATH}")
